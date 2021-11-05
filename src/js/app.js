@@ -1,12 +1,5 @@
-// TODO: write your code here
-import sum from './basic';
-
-console.log('worked');
-
-console.log(sum([1, 2]));
-
 // Status of health
-export const indicate = function (player) {
+export const indicate = (player) => {
   if (player.health > 50) {
     return 'healthy';
   }
@@ -19,14 +12,12 @@ export const indicate = function (player) {
 
 // Sorting
 
-export const sorting = function (players) {
-  return players.sort((a, b) => {
-    if (a.health > b.health) {
-      return -1;
-    }
-    if (a.health < b.health) {
-      return 1;
-    }
-    return 0;
-  });
-};
+export const sorting = (players) => players.sort((a, b) => {
+  if (a.health > b.health) {
+    return -1;
+  }
+  if (a.health < b.health) {
+    return 1;
+  }
+  return 0;
+});

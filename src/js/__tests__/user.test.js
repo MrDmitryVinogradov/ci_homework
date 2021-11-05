@@ -1,16 +1,27 @@
-import { loadUser } from '../user';
-import { httpGet } from '../http';
+import { indicate, sorting } from '../app';
 
-jest.mock('../http');
+describe.each([
+  ['Маг', 90, 'healthy'],
+  ['Маг', 30, 'wounded'],
+  ['Маг', 10, 'critical'],
+])(
+  ('should indicate status for %i health'),
+  (name, health, expected) => {
+    const result = indicate({ name, health });
+    expect(result).toBe(expected);
+  },
+);
 
-beforeEach(() => {
-  jest.resetAllMocks();
-});
-
-test('should call loadUser once', () => {
-  httpGet.mockReturnValue(JSON.stringify({}));
-
-  const response = loadUser(1);
-  expect(response).toEqual({});
-  expect(httpGet).toBeCalledWith('http://server:8080/users/1');
+test('should sort', () => {
+  const result = sorting([
+    { name: 'мечник', health: 10 },
+    { name: 'маг', health: 100 },
+    { name: 'лучник', health: 80 },
+  ]);
+  const equivalent = [
+    { name: 'маг', health: 100 },
+    { name: 'лучник', health: 80 },
+    { name: 'мечник', health: 10 },
+  ];
+  expect(result).toEqual(equivalent);
 });
